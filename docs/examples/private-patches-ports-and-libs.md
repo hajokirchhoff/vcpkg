@@ -1,11 +1,12 @@
 ## Using private patches and libs
-In most cases you can use vcpkg's default version of a library right out of the box with no modifications. If you are happy with that, you can safely skip this document. But sometimes you need to make modifications, before you can include it in your project.
+If you are happy with vcpkg's default version of a library, you can safely skip this document.
 
-Perhaps you've discovered and fixed a bug in a library, but your patch has not yet been accepted. Or you need to compile a library with a specific set of compiler switches. Or you want to use vcpkg to share your own, closed-source library with your team.
+But if you
+- have a patch for a library, which is not yet contained in the official release or
+- need a specific set of compiler switches with your build or
+- want to share your private, closed-source library with others via the vcpkg mechanism
 
-In all cases you have custom "port" files and need a way to tell vcpkg to use these, rather than the build-in ones.
-
-To do so, you have a couple of different options.
+then you can use any of the following mechanism to tell vcpkg to use your own "port files" instead of the official ones.
 
 - [overlay ports](#overlay-ports), i.e. custom port files in a separate folder
 - [private fork](#private-fork) of the vcpkg repository
