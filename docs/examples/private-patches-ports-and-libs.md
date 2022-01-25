@@ -7,45 +7,36 @@ In all cases you have custom "port" files and need a way to tell vcpkg to use th
 
 To do so, you have a couple of different options.
 
-- [overlay ports](#overlay-ports)
-  - custom port files in a seperate folder of your project
+- [overlay ports](#overlay-ports), i.e. custom port files in a separate folder
 - [private fork](#private-fork) of the vcpkg repository
 - [registries](#registries)
+
 Each method has its pros and cons.
 
 ### overlay ports
-An _overlay port_ overrides the vcpkg build instructions for this library with your own private instructions. It is basically just a directory with a couple of files in it.
-- Pro
-  - Easy to understand
-  - A single directory with two or more files in it
-  - Easily added to your projects repository
-  - self-contained
-- Cons
-  - Requires a commandline switch to vcpkg
-  - Ignores manifests (versioning)
-  - Copy&Paste for all projects that use this port
+An _overlay port_ overrides the vcpkg build instructions with your own private instructions.
+
+| Pros                                          | Cons                                           |
+|-----------------------------------------------|------------------------------------------------|
+| Easy to understand                            | Requires a commandline switch to vcpkg         |
+| A single directory with a few files           | Ignores manifests (versioning)                 |
+| Easily added to your projects repository      | Copy&Paste for all projects that use this port |
+| self-contained, just your projects repository |                                                |
 
 ### private fork
-The vcpkg git repository contains a list of all libraries known to it. This is called the "built-in registry". It is located in two directories:
+vcpkg contains a list of all libraries known to it. This is called the "built-in registry". It is located in two directories in the vcpkg git repository:
 - ./ports contains all _current_ port files. This is used in "classic" mode.
 - ./versions contains all ports files of all versions up to the _current_ version. This is used in "manifest" mode.
 
-- Pro
-  - No need to add unrelated files to a specific project
-  - One central location for all private ports for all projects
-  - version control and baselines
-- Cons
-  - Only one central location for all private ports
-  - Potential merge conflicts with upstream vcpkg merges
+| Pros                                          | Cons                                           |
+|-----------------------------------------------|------------------------------------------------|
+| No unrelated files for a specific project     | Only one central location for all private ports |
+| A central location for all private ports      | Potential merge conflicts with upstream vcpkg merges |
+| Supports version control and baselines        | Requires an additional repository |
+
 
 ### registries
 With "registries" you can specify additional lists of libraries or port files, which are looked up before the "build-in registry" is queried. Like the "build-in registry", a custom package registry contains two directories:
 - ./ports contains all _current_ port files for this particular registry.
 - ./versions contains all port files of all versions for this particular registry.
 
-
-|method|pros|cons|
-|-------------------------|-------------------|---------------------------------|
-| overlay ports | private patch or lib per project | manual configuration per project required --overlay-port parameter |
-| private fork | private patch per user or team | additional git repository for private fork required |
-| registries | private patch per user, per project, per team | additional git repositories per registry required |
