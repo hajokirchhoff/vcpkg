@@ -11,10 +11,14 @@ Each method has its pros and cons.
 An _overlay port_ overrides the vcpkg build instructions for this library with your own private instructions. It is basically just a directory with a couple of files in it.
 
 ### private fork of the vcpkg repository
-The vcpkg git repository contains a list of all libraries known to it. This list is located in two places:
+The vcpkg git repository contains a list of all libraries known to it. This is called the "built-in registry". It is located in two directories:
 - ./ports contains all _current_ port files. This is used in "classic" mode.
 - ./versions contains all ports files of all versions up to the _current_ version. This is used in "manifest" mode.
 
+### registries with an optional default registry and private registries
+With "registries" you can specify additional lists of libraries or port files, which are looked up before the "build-in registry" is queried. Like the "build-in registry", a custom package registry contains two directories:
+- ./ports contains all _current_ port files for this particular registry.
+- ./versions contains all port files of all versions for this particular registry.
 
 
 |method|pros|cons|
