@@ -6,16 +6,20 @@ But if you
 - need a specific set of compiler switches with your build or
 - want to share your private, closed-source library with others via the vcpkg mechanism
 
-then you can use any of the following mechanism to tell vcpkg to use your own "port files" instead of the official ones.
+you can use any of the following mechanism to tell vcpkg to use your own "port files".
 
-- [overlay ports](#overlay-ports), i.e. custom port files in a separate folder
+- [overlay ports](#patching-a-lib-with-overlay-ports), i.e. custom port files in a separate folder
 - [private fork](#private-fork) of the vcpkg repository
 - [registries](#registries)
 
 Each method has its pros and cons.
 
-### overlay ports
+For the example let's assume you have a fix for a [bug in the boost-serialization](https://github.com/boostorg/serialization/issues/229) library, which has not yet been incorporated into an official boost release.
+
+### patching a lib with overlay ports
 An _overlay port_ overrides the vcpkg build instructions with your own private instructions.
+
+When vcpkg builds
 
 | Pros                                          | Cons                                           |
 |-----------------------------------------------|------------------------------------------------|
