@@ -1,4 +1,4 @@
-## Using private patches and libs
+# Using private patches and libs
 If you are happy with vcpkg's default version of a library, you can safely skip this document.
 
 But if you
@@ -8,7 +8,7 @@ But if you
 
 you can use any of the following mechanism to tell vcpkg to use your own "port files".
 
-- [overlay ports](#patching-a-lib-with-overlay-ports), i.e. custom port files in a separate folder
+- [overlay ports](#overlay-ports), i.e. custom port files in a separate folder
 - [private fork](#private-fork) of the vcpkg repository
 - [registries](#registries)
 
@@ -16,8 +16,23 @@ Each method has its pros and cons.
 
 For the example let's assume you have a fix for a [bug in the boost-serialization](https://github.com/boostorg/serialization/issues/229) library, which has not yet been incorporated into an official boost release.
 
-### patching a lib with overlay ports
-An _overlay port_ overrides the vcpkg build instructions with your own private instructions.
+## Overlay ports
+An [_overlay port_](../specifications/ports-overlay.md) overrides the vcpkg build instructions with your own private instructions. Whenever vcpkg looks for build information for a specific library, it looks in the port-overlay directories first. This works in both, classic and manifest, mode.
+
+The commandline parameter `--overlay-port=<directory>` tells `vcpkg` where to look.
+
+#### Visual Studio
+The easiest way is to include a [`Directory.Build.Props`](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build) file in the root of your project. This way, all your subprojects will inherit the value. If you haven't used `Directory.Build.Props` before, now is a good time to start. [Here](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build) is the documentation.
+
+To make vcpkg use your overlay port, add the `<VcpkgAdditionalInstallOptions>` option to the file.
+```
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgAdditionalInstallOptions>--overlay-ports=$(VcpkgManifestRoot)\vcpkg_ports</VcpkgAdditionalInstallOptions>
+  </PropertyGroup>
+```
+Alternatively you can open the settings of every `vcxproj` in your solution and add the 
 
 When vcpkg builds
 
